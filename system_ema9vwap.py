@@ -199,7 +199,7 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'YELP':
       [path + '5m_#Y.E.L.P.csv', '5m_#Y.E.L.P', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
       ]
 
-elif len(sys.argv) > 1 and sys.argv[1] == 'F':
+elif len(sys.argv) > 1 and sys.argv[1] == 'FORD':
    pairs=[
       [path + '5m_#Ford.csv', '5m_#Ford', [100,'USD','IDEALPRO', 'EMA9VWAP_F']],
       [path + '5m_#Ford.csv', '5m_#Ford', [100,'USD','IDEALPRO', 'EMA9VWAP_F']],
