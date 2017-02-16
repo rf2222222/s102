@@ -363,8 +363,8 @@ def prep_pair(sym1, sym2, param1, param2):
         params[sym1]=param1
         params[sym2]=param2
         
-        confidence=adf.getCoint(SST[sym1], sym1, SST[sym2], sym2)
-        print "Coint Confidence: " + str(confidence) + "%"
+        #confidence=adf.getCoint(SST[sym1], sym1, SST[sym2], sym2)
+        #print "Coint Confidence: " + str(confidence) + "%"
         for i in SST.index:
             try:
                 priceHist=SST.ix[i]
@@ -377,8 +377,8 @@ def prep_pair(sym1, sym2, param1, param2):
                 astrat.procBar(bar1, bar2, pos[symPair], False)
                 #proc_signals(signals, params, symPair, timestamp)
                 
-                #signals=astrat.procBar(bar1, bar2, pos[symPair], True)
-                #proc_signals(signals, params, symPair, timestamp)
+                signals=astrat.procBar(bar1, bar2, pos[symPair], True)
+                proc_signals(signals, params, symPair, timestamp)
                 
             except Exception as e:
                  logging.error('prep_pair', exc_info=True)
