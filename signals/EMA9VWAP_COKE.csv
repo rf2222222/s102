@@ -1,0 +1,4 @@
+dates,signals,safef,comment
+1487136780.0,-1,1,"{""Entry"": 1, ""Exit"": 0, ""symPair"": ""5m_#CocaCola5m_#CocaCola"", ""indEMA9"": 40.56, ""vwap"": 40.56}"
+1487199300.0,0,1,"{""Entry"": 0, ""Exit"": 1, ""symPair"": ""5m_#CocaCola5m_#CocaCola"", ""indEMA9"": 40.48, ""vwap"": 40.5}"
+1487199300.0,-1,1,"{""Entry"": 1, ""Exit"": 0, ""symPair"": ""5m_#CocaCola5m_#CocaCola"", ""indEMA9"": 40.48, ""vwap"": 40.5}"
