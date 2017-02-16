@@ -1,7 +1,13 @@
 numpy
+tzlocal
+swigibpy
 pandas
+
 matplotlib
+
 sklearn
+
 statsmodels
-talib
+
+ta-lib
 
