@@ -1,2 +1,0 @@
-symbol,open_or_closed,long_or_short,quant_opened,quant_closed,opening_price_VWAP,closing_price_VWAP,PL,PurePL,commission,trade_id,closeVWAP_timestamp,closedWhen,closedWhenUnixTimeStamp,expir,instrument,markToMarket_time,openVWAP_timestamp,openedWhen,qty,currency,unr_pnl,pure_unr_pnl,balance,margin_available,purebalance
-5m_#Barclays,open,short,100.0,0.0,2.212,0.0,-2.0,0.0,2.0,22.0,,,,,5m_#Barclays,,20170208 17:05:00 EST,20170208 17:05:00 EST,-100.0,USD,,,99917.55,1999773.35,100003.55
