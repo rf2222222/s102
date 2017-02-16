@@ -1,4 +1,7 @@
 import matplotlib.pyplot as plt
+import time
+import matplotlib.ticker as tick
+import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
 import statsmodels.tsa.stattools as ts
@@ -44,6 +47,7 @@ dblStartStop = 0.06;
 dblPlaceStop = 0.14;
 dblBBUOrder = 2;
 dblBBLOrder = 2;
+sigDF=pd.DataFrame();
 
 def procBar(bar1, bar2, pos, trade):
     global pairSeries
@@ -68,6 +72,7 @@ def procBar(bar1, bar2, pos, trade):
     global dblQty2 
     global crossAbove
     global crossBelow
+    global sigDF
     
     #logging.info('procBar: %s %s %s' % (bar1, pos, trade))
     
@@ -224,7 +229,9 @@ def procBar(bar1, bar2, pos, trade):
                 #crossAbove = signals['tsZscore'].iloc[-1] <= signals['indSmaZscore'].iloc[-1] and crossAbove.any()
                 #print ' crossAbove: ' + str(crossAbove) + ' crossBelow: ' + str(crossBelow)
     
+                sigDF=signals
                 (crossBelow[sym1+sym2], crossAbove[sym1+sym2])=crossCheck(signals, sym1+sym2, 'indEMA9', 'vwap')           
+                
                 if not sentEntryOrder[sym1+sym2] and not pos.has_key(bar1['Symbol']): # and not pos.has_key(bar2['Symbol']):
                     logging.info('procBar:crossCheck (Below, Above): %s %s' % (crossBelow[sym1+sym2], crossAbove[sym1+sym2]))
 
@@ -285,7 +292,60 @@ def vwap(v, h, l):
         tmp2[i] = tmp2[i-1] + v[i]
     return tmp1 / tmp2
 '''
-
+def getPlot():
+    global sigDF
+    colnames=sigDF.columns.values.tolist()
+    fig, ax = plt.subplots()
+    for col in colnames:
+        ax.plot( sigDF[col], label=col)      
+    barSize='1 day'
+    try:
+        if sigDF.index.to_datetime()[0].time() and not sigDF.index.to_datetime()[1].time():
+            barSize = '1 day'
+        else:
+            barSize = '1 min'
+    except Exception as e:
+        print e
+    if barSize != '1 day':
+        def format_date(x, pos=None):
+            thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
+            return sigDF.index[thisind].strftime("%Y-%m-%d %H:%M")
+        #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
+         
+    else:
+        def format_date(x, pos=None):
+            thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
+            return sigDF.index[thisind].strftime("%Y-%m-%d")
+        #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
+           
+    # Now add the legend with some customizations.
+    legend = ax.legend(loc='best', shadow=True)
+    try:
+        # The frame is matplotlib.patches.Rectangle instance surrounding the legend.
+        frame = legend.get_frame()
+        frame.set_facecolor('0.90')
+        
+        # Set the fontsize
+        for label in legend.get_texts():
+            label.set_fontsize(8)
+            label.set_fontweight('bold')
+            
+        # rotate and align the tick labels so they look better
+        fig.autofmt_xdate()
+    
+        # use a more precise date string for the x axis locations in the
+        # toolbar
+    
+        fig.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+    except Exception as e:
+        print e
+    #plt.title(title)
+    #plt.ylabel(ylabel)
+    plt.show()
+    #plt.savefig(filename)
+    plt.close(fig)
+    plt.close()
+    
 def getBar(price, symbol, date, high=0, low=0, vol=0):
     bar=dict()
     bar['Close']=price

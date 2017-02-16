@@ -60,11 +60,17 @@ pairs=[
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        ]
+sysname=sys.argv[1]
 if len(sys.argv) > 1 and sys.argv[1] == 'EURUSD':
     pairs=[
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        ]
+elif len(sys.argv) > 1 and sys.argv[1] == 'AMZN':
+   pairs=[
+      [path + '5m_#Amazon.csv', '5m_#Amazon', [100,'USD','IDEALPRO', 'EMA9VWAP_AMZN']],
+      [path + '5m_#Amazon.csv', '5m_#Amazon', [100,'USD','IDEALPRO', 'EMA9VWAP_AMZN']],
+      ]
 elif len(sys.argv) > 1 and sys.argv[1] == 'AAPL':
     pairs=[
        [path + '5m_#Apple.csv', '5m_#Apple', [100,'USD','IDEALPRO', 'EMA9VWAP_AAPL']],
@@ -73,10 +79,168 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'AAPL':
 elif len(sys.argv) > 1 and sys.argv[1] == 'BARC':
     pairs=[
        [path + '5m_#Barclays.csv', '5m_#Barclays', [100,'USD','IDEALPRO', 'EMA9VWAP_BARC']],
-       [path + '5m_#Barclays.csv' , '5m_#Barclays', [100,'USD','IDEALPRO', 'EMA9VWAP_BARC']],
+       [path + '5m_#Barclays.csv', '5m_#Barclays', [100,'USD','IDEALPRO', 'EMA9VWAP_BARC']],
        ]
 
+elif len(sys.argv) > 1 and sys.argv[1] == 'VALE':
+   pairs=[
+      [path + '5m_#Vale.csv', '5m_#Vale', [100,'USD','IDEALPRO', 'EMA9VWAP_VALE']],
+      [path + '5m_#Vale.csv', '5m_#Vale', [100,'USD','IDEALPRO', 'EMA9VWAP_VALE']],
+      ]
 
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'NVDA':
+   pairs=[
+      [path + '5m_#Nvidia.csv', '5m_#Nvidia', [100,'USD','IDEALPRO', 'EMA9VWAP_NVDA']],
+      [path + '5m_#Nvidia.csv', '5m_#Nvidia', [100,'USD','IDEALPRO', 'EMA9VWAP_NVDA']],
+      ]
+
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'ANF':
+   pairs=[
+      [path + '5m_#AB&Fitch.csv', '5m_#AB&Fitch', [100,'USD','IDEALPRO', 'EMA9VWAP_ANF']],
+      [path + '5m_#AB&Fitch.csv', '5m_#AB&Fitch', [100,'USD','IDEALPRO', 'EMA9VWAP_ANF']],
+      ]
+
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'S':
+   pairs=[
+      [path + '5m_#Sprint.csv', '5m_#Sprint', [100,'USD','IDEALPRO', 'EMA9VWAP_S']],
+      [path + '5m_#Sprint.csv', '5m_#Sprint' [100,'USD','IDEALPRO', 'EMA9VWAP_S']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'RL':
+   pairs=[
+      [path + '5m_#RalpLauren.csv', '5m_#RalpLauren', [100,'USD','IDEALPRO', 'EMA9VWAP_RL']],
+      [path + '5m_#RalpLauren.csv', '5m_#RalpLauren', [100,'USD','IDEALPRO', 'EMA9VWAP_RL']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'GS':
+   pairs=[
+      [path + '5m_#GoldmSachs.csv', '5m_#GoldmSachs', [100,'USD','IDEALPRO', 'EMA9VWAP_GS']],
+      [path + '5m_#GoldmSachs.csv', '5m_#GoldmSachs', [100,'USD','IDEALPRO', 'EMA9VWAP_GS']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'BMY':
+   pairs=[
+      [path + '5m_#BristlMyer.csv', '5m_#BristlMyer', [100,'USD','IDEALPRO', 'EMA9VWAP_BMY']],
+      [path + '5m_#BristlMyer.csv', '5m_#BristlMyer', [100,'USD','IDEALPRO', 'EMA9VWAP_BMY']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'TSLA':
+   pairs=[
+      [path + '5m_#TeslaMotor.csv', '5m_#TeslaMotor', [100,'USD','IDEALPRO', 'EMA9VWAP_TSLA']],
+      [path + '5m_#TeslaMotor.csv', '5m_#TeslaMotor', [100,'USD','IDEALPRO', 'EMA9VWAP_TSLA']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'COKE':
+   pairs=[
+      [path + '5m_#CocaCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
+      [path + '5m_#CocoCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'SPLS':
+   pairs=[
+      [path + '5m_#Staples.csv', '5m_#Staples', [100,'USD','IDEALPRO', 'EMA9VWAP_SPLS']],
+      [path + '5m_#Staples.csv', '5m_#Staples', [100,'USD','IDEALPRO', 'EMA9VWAP_SPLS']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'MS':
+   pairs=[
+      [path + '5m_#M.Stanley.csv', '5m_#M.Stanley', [100,'USD','IDEALPRO', 'EMA9VWAP_MS']],
+      [path + '5m_#M.Stanley.csv', '5m_#M.Stanley', [100,'USD','IDEALPRO', 'EMA9VWAP_MS']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'SHAK':
+   pairs=[
+      [path + '5m_#ShakeShack.csv', '5m_#ShakeShack', [100,'USD','IDEALPRO', 'EMA9VWAP_SHAK']],
+      [path + '5m_#ShakeShack.csv', '5m_#ShakeShack', [100,'USD','IDEALPRO', 'EMA9VWAP_SHAK']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'BAC':
+   pairs=[
+      [path + '5m_#BofAmerica.csv', '5m_#BofAmerica', [100,'USD','IDEALPRO', 'EMA9VWAP_BAC']],
+      [path + '5m_#BofAmerica.csv', '5m_#BofAmerica', [100,'USD','IDEALPRO', 'EMA9VWAP_BAC']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'TRIP':
+   pairs=[
+      [path + '5m_#TrpAdvisor.csv', '5m_#TrpAdvisor', [100,'USD','IDEALPRO', 'EMA9VWAP_TRIP']],
+      [path + '5m_#TrpAdvisor.csv', '5m_#TrpAdvisor', [100,'USD','IDEALPRO', 'EMA9VWAP_TRIP']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'TIF':
+   pairs=[
+      [path + '5m_#Tiffanys.csv', '5m_#Tiffanys', [100,'USD','IDEALPRO', 'EMA9VWAP_TIF']],
+      [path + '5m_#Tiffanys.csv', '5m_#Tiffanys', [100,'USD','IDEALPRO', 'EMA9VWAP_TIF']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'SCHW':
+   pairs=[
+      [path + '5m_#Schwabb.csv', '5m_#Schwabb', [100,'USD','IDEALPRO', 'EMA9VWAP_SCHW']],
+      [path + '5m_#Schwabb.csv', '5m_#Schwabb', [100,'USD','IDEALPRO', 'EMA9VWAP_SCHW']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'TWTR':
+   pairs=[
+      [path + '5m_#Twitter.csv', '5m_#Twitter', [100,'USD','IDEALPRO', 'EMA9VWAP_TWTR']],
+      [path + '5m_#Twitter.csv', '5m_#Twitter', [100,'USD','IDEALPRO', 'EMA9VWAP_TWTR']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'JPM':
+   pairs=[
+      [path + '5m_#JPMorgan.csv', '5m_#JPMorgan', [100,'USD','IDEALPRO', 'EMA9VWAP_JPM']],
+      [path + '5m_#JPMorgan.csv', '5m_#JPMorgan', [100,'USD','IDEALPRO', 'EMA9VWAP_JPM']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'YELP':
+   pairs=[
+      [path + '5m_#Y.E.L.P.csv', '5m_#Y.E.L.P', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
+      [path + '5m_#Y.E.L.P.csv', '5m_#Y.E.L.P', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'F':
+   pairs=[
+      [path + '5m_#Ford.csv', '5m_#Ford', [100,'USD','IDEALPRO', 'EMA9VWAP_F']],
+      [path + '5m_#Ford.csv', '5m_#Ford', [100,'USD','IDEALPRO', 'EMA9VWAP_F']],
+      ]
+
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'C':
+   pairs=[
+      [path + '5m_#Citigroup.csv', '5m_#Citigroup', [100,'USD','IDEALPRO', 'EMA9VWAP_C']],
+      [path + '5m_#Citigroup.csv', '5m_#Citigroup', [100,'USD','IDEALPRO', 'EMA9VWAP_C']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'ZNGA':
+   pairs=[
+      [path + '5m_#Zynga.csv', '5m_#Zynga', [100,'USD','IDEALPRO', 'EMA9VWAP_ZNGA']],
+      [path + '5m_#Zynga.csv', '5m_#Zynga', [100,'USD','IDEALPRO', 'EMA9VWAP_ZNGA']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'SYMC':
+   pairs=[
+      [path + '5m_#Symantec.csv', '5m_#Symantec', [100,'USD','IDEALPRO', 'EMA9VWAP_SYMC']],
+      [path + '5m_#Symantec.csv', '5m_#Symantec', [100,'USD','IDEALPRO', 'EMA9VWAP_SYMC']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'YHOO':
+   pairs=[
+      [path + '5m_#Yahoo.csv', '5m_#Yahoo', [100,'USD','IDEALPRO', 'EMA9VWAP_YHOO']],
+      [path + '5m_#Yahoo.csv', '5m_#Yahoo', [100,'USD','IDEALPRO', 'EMA9VWAP_YHOO']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'GRPN':
+   pairs=[
+      [path + '5m_#Groupon.csv', '5m_#Groupon', [100,'USD','IDEALPRO', 'EMA9VWAP_GRPN']],
+      [path + '5m_#Groupon.csv', '5m_#Groupon', [100,'USD','IDEALPRO', 'EMA9VWAP_GRPN']],
+      ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'BABA':
+   pairs=[
+      [path + '5m_#Alibaba.csv', '5m_#Alibaba', [100,'USD','IDEALPRO', 'EMA9VWAP_BABA']],
+      [path + '5m_#Alibaba.csv', '5m_#Alibaba', [100,'USD','IDEALPRO', 'EMA9VWAP_BABA']],
+      ]
         
 def get_last_bars(currencyPairs, ylabel, callback):
     global tickerId
