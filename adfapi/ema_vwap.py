@@ -240,15 +240,13 @@ def procBar(bar1, bar2, pos, trade):
                         
                         sentEntryOrder[sym1+sym2] = True
                         sentExitOrder[sym1+sym2] = False
-                        strOrderComment =  '{"Entry": 1, "Exit": 0, "symPair": "' + sym1+sym2 + '", "indEMA9": ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
-                        strOrderComment2 = '{"Entry": 1, "Exit": 0, "symPair": "' + sym1+sym2 + '", "indEMA9": '+ str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2))+  '}';
+                        strOrderComment =  '{Entry: 1 | Exit: 0 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                         entryOrderPrice[sym1+sym2]=bar1['Close']
                         return ([[bar1['Symbol'], -abs(dblQty), strOrderComment]])
                     elif crossBelow[sym1+sym2]:
                         sentEntryOrder[sym1+sym2] = True
                         sentExitOrder[sym1+sym2] = False
-                        strOrderComment =  '{"Entry": 1, "Exit": 0, "symPair": "' + sym1+sym2 + '", "indEMA9": ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
-                        strOrderComment2 = '{"Entry": 1, "Exit": 0, "symPair": "' + sym1+sym2 + '", "indEMA9": '+ str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2))+  '}';
+                        strOrderComment =  '{Entry: 1 | Exit: 0 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                 
                         entryOrderPrice[sym1+sym2]=bar1['Close']
                         return ([[bar1['Symbol'], abs(dblQty), strOrderComment]])
@@ -269,8 +267,7 @@ def procBar(bar1, bar2, pos, trade):
                     if pos[bar1['Symbol']] < 0 and pl > plval:
                         sentEntryOrder[sym1+sym2] = False;
                         sentExitOrder[sym1+sym2] = True;
-                        strOrderComment =  '{"Entry": 0, "Exit": 1, "symPair": "' + sym1+sym2 + '", "indEMA9": ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
-                        strOrderComment2 = '{"Entry": 0, "Exit": 1, "symPair": "' + sym1+sym2 + '", "indEMA9": '+ str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2))+  '}';
+                        strOrderComment =  '{Entry: 0 | Exit: 1 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                 
                         return ([[bar1['Symbol'], -pos[bar1['Symbol']], strOrderComment]])
     
@@ -278,8 +275,7 @@ def procBar(bar1, bar2, pos, trade):
                         print pl, value, value * 0.01
                         sentEntryOrder[sym1+sym2] = False;
                         sentExitOrder[sym1+sym2] = True;
-                        strOrderComment =  '{"Entry": 0, "Exit": 1, "symPair": "' + sym1+sym2 + '", "indEMA9": ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
-                        strOrderComment2 = '{"Entry": 0, "Exit": 1, "symPair": "' + sym1+sym2 + '", "indEMA9": '+ str(round(signals.iloc[-1]['indEMA9'], 2)) + ', "vwap": ' + str(round(signals.iloc[-1]['vwap'], 2))+  '}';
+                        strOrderComment =  '{Entry: 0 | Exit: 1 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                 
                         return ([[bar1['Symbol'], -pos[bar1['Symbol']], strOrderComment]])
 '''               
