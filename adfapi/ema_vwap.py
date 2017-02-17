@@ -11,6 +11,8 @@ from numpy.linalg import inv, eig, cholesky as chol
 import talib as ta
 import logging
 import    os
+import re
+
 sys.path.append("../")
 import paper.calc as calc
 from statsmodels.regression.linear_model import OLS
@@ -377,8 +379,10 @@ def crossCheck(signals, symPair, tsz, check2):
     if not crossAbove.has_key(symPair):
         crossAbove[symPair]=False
     
-    #crossBelow[symPair]=False
-    #crossAbove[symPair]=False
+    if re.search('EMA9_20',symPair):
+        crossBelow[symPair]=False
+        crossAbove[symPair]=False
+        
     if signals.iloc[-2][tsz] > signals.iloc[-2][check2]  \
             and                                                         \
        signals.iloc[-1][tsz] <= signals.iloc[-1][check2]:
