@@ -492,8 +492,14 @@ def start_bar():
     global SST
     global pairs
     tickers=np.array(pairs,dtype=object)[:,1]
-    get_last_bars(tickers, 'Close', onBar)
-
+    #get_last_bars(tickers, 'Close', onBar)
+    
+    sig_thread = threading.Thread(target=get_last_bars, args=[tickers, 'Close', onBar])
+    sig_thread.daemon=True
+    #sig_thread.start()
+    threads.append(sig_thread)
+    
+    [t.start() for t in threads]
 
 def onBar(bar, symbols):
     try:
@@ -537,13 +543,13 @@ def get_bar(sym):
     print bar
     return bar
 
+threads = []
     
 def start_prep():
     global pairs
     global SST
     seen=dict()
     #Prep
-    threads = []
     for [file1, sym1, mult1] in pairs:
         #print "sym: " + sym1
         for [file2, sym2, mult2] in pairs:
@@ -560,13 +566,13 @@ def start_prep():
                 #sig_thread.daemon=True
                 #threads.append(sig_thread)
                 
-    sig_thread = threading.Thread(target=astrat.getPlot, args=[sysname])
-    sig_thread.daemon=True
-    threads.append(sig_thread)
+    #sig_thread = threading.Thread(target=astrat.getPlot, args=[sysname])
+    #sig_thread.daemon=True
+    #threads.append(sig_thread)
     #astrat.getPlot()
 
-    [t.start() for t in threads]
-    #[t.join() for t in threads]
+    #[t.start() for t in threads]
+    
     
     #threads=[]
     #seen=dict()
@@ -596,7 +602,8 @@ if SST.shape[0] > 3000:
 get_entryState()
 start_prep()
 start_bar()
-
+astrat.getPlot(sysname)
+[t.join() for t in threads]
 
 
 
