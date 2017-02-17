@@ -399,6 +399,12 @@ def crossCheck(signals, symPair, tsz, check2):
         crossBelow[symPair]=False
         crossAbove[symPair]=False
         
+    if re.search('VWAP',symPair):
+        crossBelow[symPair]=False
+        crossAbove[symPair]=False
+        
+    
+        
     if signals.iloc[-2][tsz] > signals.iloc[-2][check2]  \
             and                                                         \
        signals.iloc[-1][tsz] <= signals.iloc[-1][check2]:

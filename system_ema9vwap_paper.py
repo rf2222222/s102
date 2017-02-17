@@ -151,7 +151,6 @@ def refresh_paper(sysname):
 
 def get_results(sysname, pairs, files):
     
-    astrat.getPlot();
     ibdata=seigraph.generate_paper_ib_plot(sysname, 'Date', 20000)
     seigraph.generate_mult_plot(ibdata,['equitycurve','PurePLcurve'], 'Date', 'paper_' + sysname + 'ib', sysname + " IB ", 'Equity')
     
@@ -160,6 +159,8 @@ def get_results(sysname, pairs, files):
     
     data=seigraph.get_data_files(files, pairs, 'Close', 20000)
     seigraph.generate_plots(data, 'paper_' + sysname + 'Close', sysname + " Close Price", 'Close')
+
+    astrat.getPlot();
     
 
 pairs=[
