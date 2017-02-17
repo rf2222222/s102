@@ -136,7 +136,7 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'TSLA':
 elif len(sys.argv) > 1 and sys.argv[1] == 'COKE':
    pairs=[
       [path + '5m_#CocaCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
-      [path + '5m_#CocoCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
+      [path + '5m_#CocaCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'SPLS':

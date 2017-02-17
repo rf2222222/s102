@@ -87,47 +87,47 @@ else:
 
 
 def get_bar_history(datas, ylabel):
-    try:
-        SST=pd.DataFrame()
-        
-        for (filename, ticker, qty) in datas:
-            dta=pd.read_csv(filename)
-            print 'Reading ',filename
-            #symbol=ticker[0:3]
-            #currency=ticker[3:6]
-            #print 'plot for ticker: ' + currency
-            #if ylabel == 'Close':
-            #    diviser=dta.iloc[0][ylabel]
-            #    dta[ylabel]=dta[ylabel] /diviser
-                
-            #dta[ylabel].plot(label=ticker)   
-            data=pd.DataFrame()
+    #try:
+    SST=pd.DataFrame()
+    
+    for (filename, ticker, qty) in datas:
+        dta=pd.read_csv(filename)
+        print 'Reading ',filename
+        #symbol=ticker[0:3]
+        #currency=ticker[3:6]
+        #print 'plot for ticker: ' + currency
+        #if ylabel == 'Close':
+        #    diviser=dta.iloc[0][ylabel]
+        #    dta[ylabel]=dta[ylabel] /diviser
             
-            data['Date']=pd.to_datetime(dta[dta.columns[0]])
-            
-            data[ticker]=dta[ylabel]
-            data[ticker+ '_High']=dta['High']
-            data[ticker+ '_Low']=dta['Low']
-            data[ticker+ '_Volume']=dta['Volume']
-            data=data.set_index('Date') 
-            if len(SST.index.values) < 2:
-                SST=data
-            else:
-                SST = SST.combine_first(data).sort_index()
-        colnames=list()
-        for col in SST.columns:
-            if col != 'Date' and col != 0:
-                colnames.append(col)
-        data=SST
-        data=data.reset_index()        
-        data['timestamp']= data['Date']
+        #dta[ylabel].plot(label=ticker)   
+        data=pd.DataFrame()
         
-        data=data.set_index('Date')
-        data=data.fillna(method='pad')
-        return data
+        data['Date']=pd.to_datetime(dta[dta.columns[0]])
         
-    except Exception as e:
-        logging.error("something bad happened", exc_info=True)
+        data[ticker]=dta[ylabel]
+        data[ticker+ '_High']=dta['High']
+        data[ticker+ '_Low']=dta['Low']
+        data[ticker+ '_Volume']=dta['Volume']
+        data=data.set_index('Date') 
+        if len(SST.index.values) < 2:
+            SST=data
+        else:
+            SST = SST.combine_first(data).sort_index()
+    colnames=list()
+    for col in SST.columns:
+        if col != 'Date' and col != 0:
+            colnames.append(col)
+    data=SST
+    data=data.reset_index()        
+    data['timestamp']= data['Date']
+    
+    data=data.set_index('Date')
+    data=data.fillna(method='pad')
+    return data
+        
+    #except Exception as e:
+    #    logging.error("something bad happened", exc_info=True)
     return SST
 
 
@@ -174,6 +174,11 @@ if len(sys.argv) > 1 and sys.argv[1] == 'EURUSD':
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        ]
+elif len(sys.argv) > 1 and sys.argv[1] == 'AMZN':
+   pairs=[
+      [path + '5m_#Amazon.csv', '5m_#Amazon', [100,'USD','IDEALPRO', 'EMA9VWAP_AMZN']],
+      [path + '5m_#Amazon.csv', '5m_#Amazon', [100,'USD','IDEALPRO', 'EMA9VWAP_AMZN']],
+      ]
 elif len(sys.argv) > 1 and sys.argv[1] == 'AAPL':
     pairs=[
        [path + '5m_#Apple.csv', '5m_#Apple', [100,'USD','IDEALPRO', 'EMA9VWAP_AAPL']],
@@ -201,8 +206,8 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'NVDA':
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'ANF':
    pairs=[
-      [path + '5m_#Fitch.csv', '5m_#Fitch', [100,'USD','IDEALPRO', 'EMA9VWAP_ANF']],
-      [path + '5m_#Fitch.csv', '5m_#Fitch', [100,'USD','IDEALPRO', 'EMA9VWAP_ANF']],
+      [path + '5m_#AB&Fitch.csv', '5m_#AB&Fitch', [100,'USD','IDEALPRO', 'EMA9VWAP_ANF']],
+      [path + '5m_#AB&Fitch.csv', '5m_#AB&Fitch', [100,'USD','IDEALPRO', 'EMA9VWAP_ANF']],
       ]
 
 
@@ -214,32 +219,32 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'S':
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'RL':
    pairs=[
-      [path + '5m_#RalphLauren.csv', '5m_#RalphLauren', [100,'USD','IDEALPRO', 'EMA9VWAP_RL']],
-      [path + '5m_#RalphLauren.csv', '5m_#RalphLauren', [100,'USD','IDEALPRO', 'EMA9VWAP_RL']],
+      [path + '5m_#RalpLauren.csv', '5m_#RalpLauren', [100,'USD','IDEALPRO', 'EMA9VWAP_RL']],
+      [path + '5m_#RalpLauren.csv', '5m_#RalpLauren', [100,'USD','IDEALPRO', 'EMA9VWAP_RL']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'GS':
    pairs=[
-      [path + '5m_#Goldman.csv', '5m_#Goldman', [100,'USD','IDEALPRO', 'EMA9VWAP_GS']],
-      [path + '5m_#Goldman.csv', '5m_#Goldman', [100,'USD','IDEALPRO', 'EMA9VWAP_GS']],
+      [path + '5m_#GoldmSachs.csv', '5m_#GoldmSachs', [100,'USD','IDEALPRO', 'EMA9VWAP_GS']],
+      [path + '5m_#GoldmSachs.csv', '5m_#GoldmSachs', [100,'USD','IDEALPRO', 'EMA9VWAP_GS']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'BMY':
    pairs=[
-      [path + '5m_#Bristol.csv', '5m_#Bristol', [100,'USD','IDEALPRO', 'EMA9VWAP_BMY']],
-      [path + '5m_#Bristol.csv', '5m_#Bristol', [100,'USD','IDEALPRO', 'EMA9VWAP_BMY']],
+      [path + '5m_#BristlMyer.csv', '5m_#BristlMyer', [100,'USD','IDEALPRO', 'EMA9VWAP_BMY']],
+      [path + '5m_#BristlMyer.csv', '5m_#BristlMyer', [100,'USD','IDEALPRO', 'EMA9VWAP_BMY']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'TSLA':
    pairs=[
-      [path + '5m_#Tesla.csv', '5m_#Tesla', [100,'USD','IDEALPRO', 'EMA9VWAP_TSLA']],
-      [path + '5m_#Tesla.csv', '5m_#Tesla', [100,'USD','IDEALPRO', 'EMA9VWAP_TSLA']],
+      [path + '5m_#TeslaMotor.csv', '5m_#TeslaMotor', [100,'USD','IDEALPRO', 'EMA9VWAP_TSLA']],
+      [path + '5m_#TeslaMotor.csv', '5m_#TeslaMotor', [100,'USD','IDEALPRO', 'EMA9VWAP_TSLA']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'COKE':
    pairs=[
-      [path + '5m_#Coke.csv', '5m_#Coke', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
-      [path + '5m_#Coke.csv', '5m_#Coke', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
+      [path + '5m_#CocaCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
+      [path + '5m_#CocaCola.csv', '5m_#CocaCola', [100,'USD','IDEALPRO', 'EMA9VWAP_COKE']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'SPLS':
@@ -250,14 +255,14 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'SPLS':
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'MS':
    pairs=[
-      [path + '5m_#MorganStanley.csv', '5m_#MorganStanley', [100,'USD','IDEALPRO', 'EMA9VWAP_MS']],
-      [path + '5m_#MorganStanley.csv', '5m_#MorganStanley', [100,'USD','IDEALPRO', 'EMA9VWAP_MS']],
+      [path + '5m_#M.Stanley.csv', '5m_#M.Stanley', [100,'USD','IDEALPRO', 'EMA9VWAP_MS']],
+      [path + '5m_#M.Stanley.csv', '5m_#M.Stanley', [100,'USD','IDEALPRO', 'EMA9VWAP_MS']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'SHAK':
    pairs=[
-      [path + '5m_#ShakeShake.csv', '5m_#ShakeShake', [100,'USD','IDEALPRO', 'EMA9VWAP_SHAK']],
-      [path + '5m_#ShakeShake.csv', '5m_#ShakeShake', [100,'USD','IDEALPRO', 'EMA9VWAP_SHAK']],
+      [path + '5m_#ShakeShack.csv', '5m_#ShakeShack', [100,'USD','IDEALPRO', 'EMA9VWAP_SHAK']],
+      [path + '5m_#ShakeShack.csv', '5m_#ShakeShack', [100,'USD','IDEALPRO', 'EMA9VWAP_SHAK']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'BAC':
@@ -268,20 +273,20 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'BAC':
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'TRIP':
    pairs=[
-      [path + '5m_#TripAdvisor.csv', '5m_#TripAdvisor', [100,'USD','IDEALPRO', 'EMA9VWAP_TRIP']],
-      [path + '5m_#TripAdvisor.csv', '5m_#TripAdvisor', [100,'USD','IDEALPRO', 'EMA9VWAP_TRIP']],
+      [path + '5m_#TrpAdvisor.csv', '5m_#TrpAdvisor', [100,'USD','IDEALPRO', 'EMA9VWAP_TRIP']],
+      [path + '5m_#TrpAdvisor.csv', '5m_#TrpAdvisor', [100,'USD','IDEALPRO', 'EMA9VWAP_TRIP']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'TIF':
    pairs=[
-      [path + '5m_#Tiffany.csv', '5m_#Tiffany', [100,'USD','IDEALPRO', 'EMA9VWAP_TIF']],
-      [path + '5m_#Tiffany.csv', '5m_#Tiffany', [100,'USD','IDEALPRO', 'EMA9VWAP_TIF']],
+      [path + '5m_#Tiffanys.csv', '5m_#Tiffanys', [100,'USD','IDEALPRO', 'EMA9VWAP_TIF']],
+      [path + '5m_#Tiffanys.csv', '5m_#Tiffanys', [100,'USD','IDEALPRO', 'EMA9VWAP_TIF']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'SCHW':
    pairs=[
-      [path + '5m_#Schwab.csv', '5m_#Schwab', [100,'USD','IDEALPRO', 'EMA9VWAP_SCHW']],
-      [path + '5m_#Schwab.csv', '5m_#Schwab', [100,'USD','IDEALPRO', 'EMA9VWAP_SCHW']],
+      [path + '5m_#Schwabb.csv', '5m_#Schwabb', [100,'USD','IDEALPRO', 'EMA9VWAP_SCHW']],
+      [path + '5m_#Schwabb.csv', '5m_#Schwabb', [100,'USD','IDEALPRO', 'EMA9VWAP_SCHW']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'TWTR':
@@ -292,26 +297,27 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'TWTR':
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'JPM':
    pairs=[
-      [path + '5m_#Morgan.csv', '5m_#Morgan', [100,'USD','IDEALPRO', 'EMA9VWAP_JPM']],
-      [path + '5m_#Morgan.csv', '5m_#Morgan', [100,'USD','IDEALPRO', 'EMA9VWAP_JPM']],
+      [path + '5m_#JPMorgan.csv', '5m_#JPMorgan', [100,'USD','IDEALPRO', 'EMA9VWAP_JPM']],
+      [path + '5m_#JPMorgan.csv', '5m_#JPMorgan', [100,'USD','IDEALPRO', 'EMA9VWAP_JPM']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'YELP':
    pairs=[
-      [path + '5m_#Yelp.csv', '5m_#Yelp', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
-      [path + '5m_#Yelp.csv', '5m_#Yelp', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
+      [path + '5m_#Y.E.L.P.csv', '5m_#Y.E.L.P', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
+      [path + '5m_#Y.E.L.P.csv', '5m_#Y.E.L.P', [100,'USD','IDEALPRO', 'EMA9VWAP_YELP']],
       ]
 
-elif len(sys.argv) > 1 and sys.argv[1] == 'F':
+elif len(sys.argv) > 1 and sys.argv[1] == 'FORD':
    pairs=[
       [path + '5m_#Ford.csv', '5m_#Ford', [100,'USD','IDEALPRO', 'EMA9VWAP_F']],
       [path + '5m_#Ford.csv', '5m_#Ford', [100,'USD','IDEALPRO', 'EMA9VWAP_F']],
       ]
+
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'C':
    pairs=[
-      [path + '5m_#Citygroup.csv', '5m_#Citygroup', [100,'USD','IDEALPRO', 'EMA9VWAP_C']],
-      [path + '5m_#Citygroup.csv', '5m_#Citygroup', [100,'USD','IDEALPRO', 'EMA9VWAP_C']],
+      [path + '5m_#Citigroup.csv', '5m_#Citigroup', [100,'USD','IDEALPRO', 'EMA9VWAP_C']],
+      [path + '5m_#Citigroup.csv', '5m_#Citigroup', [100,'USD','IDEALPRO', 'EMA9VWAP_C']],
       ]
 
 elif len(sys.argv) > 1 and sys.argv[1] == 'ZNGA':
@@ -337,6 +343,13 @@ elif len(sys.argv) > 1 and sys.argv[1] == 'GRPN':
       [path + '5m_#Groupon.csv', '5m_#Groupon', [100,'USD','IDEALPRO', 'EMA9VWAP_GRPN']],
       [path + '5m_#Groupon.csv', '5m_#Groupon', [100,'USD','IDEALPRO', 'EMA9VWAP_GRPN']],
       ]
+
+elif len(sys.argv) > 1 and sys.argv[1] == 'BABA':
+   pairs=[
+      [path + '5m_#Alibaba.csv', '5m_#Alibaba', [100,'USD','IDEALPRO', 'EMA9VWAP_BABA']],
+      [path + '5m_#Alibaba.csv', '5m_#Alibaba', [100,'USD','IDEALPRO', 'EMA9VWAP_BABA']],
+      ]
+        
 
 #data=gettrades(sysname)
 SST=get_bar_history(pairs, 'Close')
@@ -411,11 +424,11 @@ def proc_pair(sysname, sym1, sym2, param1, param2):
                         bid=float(bids[barSym])
                         
                         sym=barSym
-                        secType='CASH'
-                        ibsym=sym[0:3]
-                        if re.search(r'BTC',barSym):
-                            secType='BITCOIN'
-                            ibsym=sym
+                        secType='FUT'
+                        ibsym=sym #[0:3]
+                        #if re.search(r'BTC',barSym):
+                        #    secType='BITCOIN'
+                        #    ibsym=sym
                         
                         pricefeed=pd.DataFrame([[ask, bid, 1, 1, exchange, secType, commission_pct, commission_cash]], columns=['Ask','Bid','C2Mult','IBMult','Exchange','Type','Commission_Pct','Commission_Cash'])
                         if ask > 0 and bid > 0:
@@ -437,7 +450,7 @@ def proc_backtest(sysname, SST):
     for [file1,sym1, mult1] in pairs:
         #print "sym: " + sym1
         for [file2,sym2, mult2] in pairs:
-            if not seen.has_key(sym1+sym2) and not seen.has_key(sym2+sym1):
+            if not seen.has_key(sym1+sym2) and not seen.has_key(sym2+sym1) and sym1 == sym2:
                 seen[sym1+sym2]=1
                 seen[sym2+sym1]=1
                 mypairs=[sym1,sym2]

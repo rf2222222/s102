@@ -169,6 +169,7 @@ def procBar(bar1, bar2, pos, trade):
         
         signals['Date']=tsDates[sym1]
         signals['indEMA9']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=9)
+        signals['indEMA20']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=20)
         
         
         df=pd.DataFrame({ 'v' : pairVSeries[sym1], 
@@ -230,29 +231,33 @@ def procBar(bar1, bar2, pos, trade):
                 #print ' crossAbove: ' + str(crossAbove) + ' crossBelow: ' + str(crossBelow)
     
                 sigDF=signals
-                (crossBelow[sym1+sym2], crossAbove[sym1+sym2])=crossCheck(signals, sym1+sym2, 'indEMA9', 'vwap')           
-                
+                (crossBelow[sym1+sym2+'EMAVWAP'], crossAbove[sym1+sym2+'EMAVWAP'])=crossCheck(signals, sym1+sym2+'EMAVWAP', 'indEMA9', 'vwap')           
+                (crossBelow[sym1+sym2+'EMA9_20'], crossAbove[sym1+sym2+'EMA9_20'])=crossCheck(signals, sym1+sym2+'EMA9_20', 'indEMA9', 'indEMA20')
+                       
                 if not sentEntryOrder[sym1+sym2] and not pos.has_key(bar1['Symbol']): # and not pos.has_key(bar2['Symbol']):
-                    logging.info('procBar:crossCheck (Below, Above): %s %s' % (crossBelow[sym1+sym2], crossAbove[sym1+sym2]))
-
+                    logging.info('procBar:EMA9 and VWAP crossCheck (Below, Above): %s %s' % (crossBelow[sym1+sym2+'EMAVWAP'], crossAbove[sym1+sym2+'EMAVWAP']))
+                    logging.info('procBar:EMA9 and EMA20 crossCheck (Below, Above): %s %s' % (crossBelow[sym1+sym2+'EMA9_20'], crossAbove[sym1+sym2+'EMA9_20']))
+                    strOrderComment =  '{Entry: 1 | Exit: 0 | symPair: ' + sym1+sym2 + ' | EMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | EMA20: ' + str(round(signals.iloc[-1]['indEMA20'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                     
-                    if crossAbove[sym1+sym2]:
+                    
+                    if crossAbove[sym1+sym2+'EMAVWAP']:
                         
                         sentEntryOrder[sym1+sym2] = True
                         sentExitOrder[sym1+sym2] = False
-                        strOrderComment =  '{Entry: 1 | Exit: 0 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                         entryOrderPrice[sym1+sym2]=bar1['Close']
                         return ([[bar1['Symbol'], -abs(dblQty), strOrderComment]])
-                    elif crossBelow[sym1+sym2]:
+                    elif crossBelow[sym1+sym2+'EMAVWAP']:
                         sentEntryOrder[sym1+sym2] = True
                         sentExitOrder[sym1+sym2] = False
-                        strOrderComment =  '{Entry: 1 | Exit: 0 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                 
                         entryOrderPrice[sym1+sym2]=bar1['Close']
                         return ([[bar1['Symbol'], abs(dblQty), strOrderComment]])
     
                 elif not sentExitOrder[sym1+sym2] and pos.has_key(bar1['Symbol']): # and pos.has_key(bar2['Symbol']):
-                    logging.info('procBar:crossCheck (Below, Above):  %s %s' % (crossBelow[sym1+sym2], crossAbove[sym1+sym2]))
+                    logging.info('procBar:EMA9 and VWAP crossCheck (Below, Above): %s %s' % (crossBelow[sym1+sym2+'EMAVWAP'], crossAbove[sym1+sym2+'EMAVWAP']))
+                    logging.info('procBar:EMA9 and EMA20 crossCheck (Below, Above): %s %s' % (crossBelow[sym1+sym2+'EMA9_20'], crossAbove[sym1+sym2+'EMA9_20']))
+                    strOrderComment =  '{Entry: 0 | Exit: 1 | symPair: ' + sym1+sym2 + ' | EMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | EMA20: ' + str(round(signals.iloc[-1]['indEMA20'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
+
                     openAt=entryOrderPrice[sym1+sym2]
                     closeAt=bar1['Close']
                     qty=abs(pos[bar1['Symbol']])
@@ -260,24 +265,29 @@ def procBar(bar1, bar2, pos, trade):
                         side='long'
                     else:
                         side='short'
-                    mult=100000
-                    (pl, value)=calc.calc_pl(openAt, closeAt, qty, mult, side)
+                    mult=500
+                    calcqty=10
+                    (pl, value)=calc.calc_pl(openAt, closeAt, calcqty, mult, side)
                     plval=50
                     print pos[bar1['Symbol']], pl, value, value * 0.01
                     if pos[bar1['Symbol']] < 0 and pl > plval:
                         sentEntryOrder[sym1+sym2] = False;
                         sentExitOrder[sym1+sym2] = True;
-                        strOrderComment =  '{Entry: 0 | Exit: 1 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                 
                         return ([[bar1['Symbol'], -pos[bar1['Symbol']], strOrderComment]])
     
-                    elif pos[bar1['Symbol']] > 0 and pl < plval:
+                    elif pos[bar1['Symbol']] > 0 and pl > plval:
                         print pl, value, value * 0.01
                         sentEntryOrder[sym1+sym2] = False;
                         sentExitOrder[sym1+sym2] = True;
-                        strOrderComment =  '{Entry: 0 | Exit: 1 | symPair: ' + sym1+sym2 + ' | indEMA9: ' + str(round(signals.iloc[-1]['indEMA9'], 2)) + ' | vwap: ' + str(round(signals.iloc[-1]['vwap'], 2)) + '}';
                 
                         return ([[bar1['Symbol'], -pos[bar1['Symbol']], strOrderComment]])
+
+                    if crossBelow[sym1+sym2+'EMA9_20'] or crossAbove[sym1+sym2+'EMA9_20']:
+                        if pos[bar1['Symbol']]  and pl > 0:
+                            sentEntryOrder[sym1+sym2] = False;
+                            sentExitOrder[sym1+sym2] = True;
+                            return ([[bar1['Symbol'], -pos[bar1['Symbol']], strOrderComment]])
 '''               
 @jit
 def vwap(v, h, l):
@@ -366,7 +376,9 @@ def crossCheck(signals, symPair, tsz, check2):
         crossBelow[symPair]=False
     if not crossAbove.has_key(symPair):
         crossAbove[symPair]=False
-        
+    
+    crossBelow[symPair]=False
+    crossAbove[symPair]=False
     if signals.iloc[-2][tsz] > signals.iloc[-2][check2]  \
             and                                                         \
        signals.iloc[-1][tsz] <= signals.iloc[-1][check2]:
