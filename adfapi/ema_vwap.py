@@ -377,8 +377,8 @@ def crossCheck(signals, symPair, tsz, check2):
     if not crossAbove.has_key(symPair):
         crossAbove[symPair]=False
     
-    crossBelow[symPair]=False
-    crossAbove[symPair]=False
+    #crossBelow[symPair]=False
+    #crossAbove[symPair]=False
     if signals.iloc[-2][tsz] > signals.iloc[-2][check2]  \
             and                                                         \
        signals.iloc[-1][tsz] <= signals.iloc[-1][check2]:
