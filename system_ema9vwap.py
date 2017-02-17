@@ -15,6 +15,7 @@ Created on Tue Mar 08 20:10:29 2016
 """
 import math
 import matplotlib.pyplot as plt
+
 import numpy as np
 import pandas as pd
 import time
@@ -49,8 +50,9 @@ import adfapi.adf_helper as adf
 from dateutil.parser import parse
 import pytz
 
+sysname=sys.argv[1]
 
-logging.basicConfig(filename='./system_ema9_vwap.log',level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout,  level=logging.DEBUG)
 path='/MQL4/Files/'
 barpath='/MQL4/Files/bars/'
 pairs=[]
@@ -60,7 +62,7 @@ pairs=[
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
        ]
-sysname=sys.argv[1]
+
 if len(sys.argv) > 1 and sys.argv[1] == 'EURUSD':
     pairs=[
        [path + '5m_EURUSD.csv', '5m_EURUSD', [100000,'USD','IDEALPRO', 'EMA9VWAP_EURUSD']],
@@ -515,6 +517,7 @@ def onBar(bar, symbols):
         		 seen[sym2+sym1]=1
         		 (sym1,sym2,mult1,mult2)=pparams[sym1+sym2]
         		 proc_onBar(sym1,sym2,mult1,mult2)
+                 
         #for sym1 in symbols:
         #    for sym2 in symbols:
         #        if sym1 != sym2 and not seen.has_key(sym1+sym2) and not seen.has_key(sym2+sym1):
@@ -557,8 +560,12 @@ def start_prep():
                 #sig_thread.daemon=True
                 #threads.append(sig_thread)
                 
-                
-    #[t.start() for t in threads]
+    sig_thread = threading.Thread(target=astrat.getPlot, args=[sysname])
+    sig_thread.daemon=True
+    threads.append(sig_thread)
+    #astrat.getPlot()
+
+    [t.start() for t in threads]
     #[t.join() for t in threads]
     
     #threads=[]
