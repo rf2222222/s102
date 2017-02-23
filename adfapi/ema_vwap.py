@@ -335,52 +335,55 @@ def getPlot(title=''):
     
     
     def update(i):
-        #plt.clf()
-        
-        ax.clear() 
-        plt.title(title)
-        for col in colnames:
-            ax.plot( sigDF[col], label=col)      
-        
-        barSize='1 day'
         try:
-            if sigDF.index.to_datetime()[0].time() and not sigDF.index.to_datetime()[1].time():
-                barSize = '1 day'
-            else:
-                barSize = '1 min'
-        except Exception as e:
-            print e
-        if barSize != '1 day':
-            def format_date(x, pos=None):
-                thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
-                return sigDF.index[thisind].strftime("%Y-%m-%d %H:%M")
-            #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
-             
-        else:
-            def format_date(x, pos=None):
-                thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
-                return sigDF.index[thisind].strftime("%Y-%m-%d")
-            #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
-               
-        # Now add the legend with some customizations.
-        legend = ax.legend(loc='best', shadow=True)
-        try:
-            # The frame is matplotlib.patches.Rectangle instance surrounding the legend.
-            frame = legend.get_frame()
-            frame.set_facecolor('0.90')
+            #plt.clf()
             
-            # Set the fontsize
-            for label in legend.get_texts():
-                label.set_fontsize(8)
-                label.set_fontweight('bold')
+            ax.clear() 
+            plt.title(title)
+            for col in colnames:
+                ax.plot( sigDF[col], label=col)      
+            
+            barSize='1 day'
+            try:
+                if sigDF.index.to_datetime()[0].time() and not sigDF.index.to_datetime()[1].time():
+                    barSize = '1 day'
+                else:
+                    barSize = '1 min'
+            except Exception as e:
+                print e
+            if barSize != '1 day':
+                def format_date(x, pos=None):
+                    thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
+                    return sigDF.index[thisind].strftime("%Y-%m-%d %H:%M")
+                #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
+                 
+            else:
+                def format_date(x, pos=None):
+                    thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
+                    return sigDF.index[thisind].strftime("%Y-%m-%d")
+                #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
+                   
+            # Now add the legend with some customizations.
+            legend = ax.legend(loc='best', shadow=True)
+            try:
+                # The frame is matplotlib.patches.Rectangle instance surrounding the legend.
+                frame = legend.get_frame()
+                frame.set_facecolor('0.90')
                 
-            # rotate and align the tick labels so they look better
-            fig.autofmt_xdate()
-        
-            # use a more precise date string for the x axis locations in the
-            # toolbar
-        
-            fig.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+                # Set the fontsize
+                for label in legend.get_texts():
+                    label.set_fontsize(8)
+                    label.set_fontweight('bold')
+                    
+                # rotate and align the tick labels so they look better
+                fig.autofmt_xdate()
+            
+                # use a more precise date string for the x axis locations in the
+                # toolbar
+            
+                fig.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+            except Exception as e:
+                print e
         except Exception as e:
             print e
             
