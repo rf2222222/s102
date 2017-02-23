@@ -86,6 +86,28 @@ def procBar(bar1, bar2, pos, trade):
         sym1=bar1['Symbol']
         sym2=bar2['Symbol']
         #logging.info("s106:procBar:" + sym1 + "," + sym2)
+        if len(tsDates[sym1]) < 1 or tsDates[sym1][0].day < bar1['Date'].day:
+            pairSeries[sym1]=list()
+            pairHSeries[sym1]=list()
+            pairLSeries[sym1]=list()
+            pairVSeries[sym1]=list()
+            pairSeries[sym2]=list()
+            pairHSeries[sym2]=list()
+            pairLSeries[sym2]=list()
+            pairVSeries[sym2]=list()
+            tsPairratio[sym1+sym2]=list()
+            tsPairratio[sym2+sym1]=list()
+            tsZscore[sym1+sym2]=list()
+            tsZscore[sym2+sym1]=list()
+            tsDates[sym1]=list()
+            tsDates[sym2]=list()
+            tsDates[sym1+sym2]=list()
+            crossAbove[sym1+sym2]=False
+            crossBelow[sym1+sym2]=False
+            #sentEntryOrder[sym1+sym2]=False
+            #sentExitOrder[sym1+sym2]=False
+            
+            
         if not pairSeries.has_key(sym1):
             pairSeries[sym1]=list()
             pairHSeries[sym1]=list()
@@ -121,6 +143,7 @@ def procBar(bar1, bar2, pos, trade):
         if not sentExitOrder.has_key(sym1+sym2):
             sentExitOrder[sym1+sym2]=False
         
+                
         if bar1['Date'] not in tsDates[sym1]:
             pairSeries[sym1].append(bar1['Close'])
             pairHSeries[sym1].append(bar1['High'])
