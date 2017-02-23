@@ -14,7 +14,8 @@ import talib as ta
 import logging
 import    os
 import re
-
+import datetime as datetime
+import dateutil
 sys.path.append("../")
 import paper.calc as calc
 from statsmodels.regression.linear_model import OLS
@@ -79,35 +80,16 @@ def procBar(bar1, bar2, pos, trade):
     global sigDF
     
     #logging.info('procBar: %s %s %s' % (bar1, pos, trade))
-    
+    bar1=bar1.copy()
+    bar2=bar2.copy()
     if bar1['Close'] > 0 and bar2['Close'] > 0:
         xd = bar1['Close'] * instPair1Factor
         yd = bar2['Close'] * instPair2Factor
         sym1=bar1['Symbol']
         sym2=bar2['Symbol']
-        #logging.info("s106:procBar:" + sym1 + "," + sym2)
-        if len(tsDates[sym1]) < 1 or tsDates[sym1][0].day < bar1['Date'].day:
-            pairSeries[sym1]=list()
-            pairHSeries[sym1]=list()
-            pairLSeries[sym1]=list()
-            pairVSeries[sym1]=list()
-            pairSeries[sym2]=list()
-            pairHSeries[sym2]=list()
-            pairLSeries[sym2]=list()
-            pairVSeries[sym2]=list()
-            tsPairratio[sym1+sym2]=list()
-            tsPairratio[sym2+sym1]=list()
-            tsZscore[sym1+sym2]=list()
-            tsZscore[sym2+sym1]=list()
-            tsDates[sym1]=list()
-            tsDates[sym2]=list()
-            tsDates[sym1+sym2]=list()
-            crossAbove[sym1+sym2]=False
-            crossBelow[sym1+sym2]=False
-            #sentEntryOrder[sym1+sym2]=False
-            #sentExitOrder[sym1+sym2]=False
-            
-            
+        bar1['Date']=datetime.datetime.fromtimestamp(float(bar1['Date']))
+        bar2['Date']=datetime.datetime.fromtimestamp(float(bar2['Date']))
+        logging.info("s106:procBar:" + sym1 + "," + sym2 + "," + str(bar1['Date']))
         if not pairSeries.has_key(sym1):
             pairSeries[sym1]=list()
             pairHSeries[sym1]=list()
@@ -143,7 +125,27 @@ def procBar(bar1, bar2, pos, trade):
         if not sentExitOrder.has_key(sym1+sym2):
             sentExitOrder[sym1+sym2]=False
         
-                
+        if len(tsDates[sym1]) < 1 or datetime.datetime(bar1['Date'].year, bar1['Date'].month, bar1['Date'].day) > datetime.datetime(tsDates[sym1][0].year, tsDates[sym1][0].month, tsDates[sym1][0].day) + dateutil.relativedelta.relativedelta(days=1):
+            pairSeries[sym1]=list()
+            pairHSeries[sym1]=list()
+            pairLSeries[sym1]=list()
+            pairVSeries[sym1]=list()
+            pairSeries[sym2]=list()
+            pairHSeries[sym2]=list()
+            pairLSeries[sym2]=list()
+            pairVSeries[sym2]=list()
+            tsPairratio[sym1+sym2]=list()
+            tsPairratio[sym2+sym1]=list()
+            tsZscore[sym1+sym2]=list()
+            tsZscore[sym2+sym1]=list()
+            tsDates[sym1]=list()
+            tsDates[sym2]=list()
+            tsDates[sym1+sym2]=list()
+            crossAbove[sym1+sym2]=False
+            crossBelow[sym1+sym2]=False
+            #sentEntryOrder[sym1+sym2]=False
+            #sentExitOrder[sym1+sym2]=False
+            
         if bar1['Date'] not in tsDates[sym1]:
             pairSeries[sym1].append(bar1['Close'])
             pairHSeries[sym1].append(bar1['High'])
