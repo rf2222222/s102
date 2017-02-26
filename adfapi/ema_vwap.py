@@ -125,6 +125,7 @@ def procBar(bar1, bar2, pos, trade):
         if not sentExitOrder.has_key(sym1+sym2):
             sentExitOrder[sym1+sym2]=False
         
+        '''
         if len(tsDates[sym1]) < 1 or datetime.datetime(bar1['Date'].year, bar1['Date'].month, bar1['Date'].day) > datetime.datetime(tsDates[sym1][0].year, tsDates[sym1][0].month, tsDates[sym1][0].day) + dateutil.relativedelta.relativedelta(days=1):
             pairSeries[sym1]=list()
             pairHSeries[sym1]=list()
@@ -145,7 +146,7 @@ def procBar(bar1, bar2, pos, trade):
             crossBelow[sym1+sym2]=False
             #sentEntryOrder[sym1+sym2]=False
             #sentExitOrder[sym1+sym2]=False
-            
+        ''' 
         if bar1['Date'] not in tsDates[sym1]:
             pairSeries[sym1].append(bar1['Close'])
             pairHSeries[sym1].append(bar1['High'])
