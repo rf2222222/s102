@@ -31,7 +31,7 @@ tsPairratio=dict()
 tsZscore=dict()
 tsDates=dict()
 indSmaZscore=dict()
-intDatapoints=1000
+intDatapoints=84
 sentEntryOrder = dict()
 sentExitOrder = dict()
 entryOrderPrice =dict()
@@ -196,14 +196,15 @@ def procBar(bar1, bar2, pos, trade):
         #signals['indSmaZscore']=pd.rolling_mean(signals['tsZscore'], intSMALength, min_periods=1)
         #signals['indSmaZscore2']=pd.rolling_mean(signals['tsZscore2'], intSMALength, min_periods=1)    
         
-        signals['Date']=tsDates[sym1]
-        signals['indEMA9']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=9)
-        signals['indEMA20']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=20)
+        
+        signals['Date']=tsDates[sym1][-intDatapoints:]
+        signals['indEMA9']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=9)[-intDatapoints:]
+        signals['indEMA20']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=20)[-intDatapoints:]
         
         
-        df=pd.DataFrame({ 'v' : pairVSeries[sym1], 
-                          'h' : pairHSeries[sym1], 
-                          'l' : pairLSeries[sym1], 
+        df=pd.DataFrame({ 'v' : pairVSeries[sym1][-intDatapoints:], 
+                          'h' : pairHSeries[sym1][-intDatapoints:], 
+                          'l' : pairLSeries[sym1][-intDatapoints:], 
                          },
                          columns=['v','h','l'] )
         
