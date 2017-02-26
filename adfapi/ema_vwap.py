@@ -6,6 +6,7 @@ import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
 import statsmodels.tsa.stattools as ts
+import numpy as np
 import sys
 import time
 from numpy import zeros, ones, flipud, log
@@ -125,6 +126,7 @@ def procBar(bar1, bar2, pos, trade):
         if not sentExitOrder.has_key(sym1+sym2):
             sentExitOrder[sym1+sym2]=False
         
+        '''
         if len(tsDates[sym1]) < 1 or datetime.datetime(bar1['Date'].year, bar1['Date'].month, bar1['Date'].day) > datetime.datetime(tsDates[sym1][0].year, tsDates[sym1][0].month, tsDates[sym1][0].day) + dateutil.relativedelta.relativedelta(days=1):
             pairSeries[sym1]=list()
             pairHSeries[sym1]=list()
@@ -145,7 +147,8 @@ def procBar(bar1, bar2, pos, trade):
             crossBelow[sym1+sym2]=False
             #sentEntryOrder[sym1+sym2]=False
             #sentExitOrder[sym1+sym2]=False
-            
+        '''
+             
         if bar1['Date'] not in tsDates[sym1]:
             pairSeries[sym1].append(bar1['Close'])
             pairHSeries[sym1].append(bar1['High'])
@@ -189,6 +192,8 @@ def procBar(bar1, bar2, pos, trade):
             tsZscore[sym2+sym1].append(dblZscoreData2)
             tsDates[sym2+sym1].append(bar2['Date'])
          
+         
+        
         signals=pd.DataFrame()
         #signals['Date']=tsDates[sym1+sym2]
         #signals['tsZscore']=tsZscore[sym1+sym2]
@@ -196,15 +201,23 @@ def procBar(bar1, bar2, pos, trade):
         #signals['indSmaZscore']=pd.rolling_mean(signals['tsZscore'], intSMALength, min_periods=1)
         #signals['indSmaZscore2']=pd.rolling_mean(signals['tsZscore2'], intSMALength, min_periods=1)    
         
+        idxRanges=np.arange(100)
+        endDate=tsDates[sym1][-1]
+        startIdx=-1
+        for idx in idxRanges:
+            startIdx=-idx-1
+            startDate=tsDates[sym1][-startIdx-1]
+            if startDate.day != endDate.day:
+                break
+            
+        signals['Date']=tsDates[sym1][-startIdx:]
+        signals['indEMA9']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=9)[-startIdx:]
+        signals['indEMA20']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=20)[-startIdx:]
         
-        signals['Date']=tsDates[sym1][-intDatapoints:]
-        signals['indEMA9']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=9)[-intDatapoints:]
-        signals['indEMA20']=ta.EMA(np.array(pairSeries[sym1]), timeperiod=20)[-intDatapoints:]
         
-        
-        df=pd.DataFrame({ 'v' : pairVSeries[sym1][-intDatapoints:], 
-                          'h' : pairHSeries[sym1][-intDatapoints:], 
-                          'l' : pairLSeries[sym1][-intDatapoints:], 
+        df=pd.DataFrame({ 'v' : pairVSeries[sym1][-startIdx:], 
+                          'h' : pairHSeries[sym1][-startIdx:], 
+                          'l' : pairLSeries[sym1][-startIdx:], 
                          },
                          columns=['v','h','l'] )
         
@@ -353,10 +366,11 @@ def getPlot(title=''):
             #except Exception as e:
             #    print e
             #if barSize != '1 day':
-            def format_date(x, pos=None):
-                thisind = np.clip(int(x + 0.5), 0, sigDF.shape[0] - 1)
-                return sigDF.index[thisind].strftime("%Y-%m-%d %H:%M")
-            ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
+            
+            #def format_date(x, pos=None):
+            #    thisind = np.clip(int(x), 0, sigDF.shape[0] - 1)
+            #    return sigDF.index[thisind].strftime("%Y-%m-%d %H:%M")
+            #ax.xaxis.set_major_formatter(tick.FuncFormatter(format_date))
             # 
             #else:
             #    def format_date(x, pos=None):
@@ -376,13 +390,15 @@ def getPlot(title=''):
                     label.set_fontsize(8)
                     label.set_fontweight('bold')
                     
-                # rotate and align the tick labels so they look better
-                fig.autofmt_xdate()
             
                 # use a more precise date string for the x axis locations in the
                 # toolbar
             
-                fig.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+                fig.fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
+                
+                
+                # rotate and align the tick labels so they look better
+                fig.autofmt_xdate()
             except Exception as e:
                 print e
         except Exception as e:
