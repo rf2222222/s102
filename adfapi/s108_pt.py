@@ -263,17 +263,11 @@ def procBar(bar1, bar2, pos, trade, displayPL=False):
                             print ("PL: ", pl,  'qty1', portfolioData[sym1]['qty'], 'qty2', portfolioData[sym2]['qty'])
                         except Exception as e:
                             print (e)                         
+                    
                     if pos[bar1['Symbol']] < 0 and pos[bar2['Symbol']] > 0 and \
-                        pl_amt > 0 and \
-                        (pl > 0.015 or (dblZscoreData <= dblLowerThreshold and crossAbove[sym1+sym2]==1 and z1CBBbl and pl > 0.01)):
-                        #Buy(instPair1, dblQty, strOrderComment);
-                        #Sell(instPair2, dblQty2, strOrderComment2);
-    
-                        #if (myParam.hasOpt)
-                        #{
-                        #   Buy(myParam.instPair1opt, myParam.sym1OptQty, strOrderComment);
-                        #   Buy(myParam.instPair2opt, myParam.sym2OptQty, strOrderComment);
-                        #}
+                        (pl > 0.006 or (dblZscoreData <= dblLowerThreshold and crossAbove[sym1+sym2]==1 and z1CBBbl and pl > 0.004)):
+                        #pl_amt > 0 and \
+                        
                         sentEntryOrder[sym1+sym2] = False;
                         sentExitOrder[sym1+sym2] = True;
                         strOrderComment = '{"Entry": 0, "Exit": 1, "symPair": "' + sym1+sym2 + '", "zScore": ' + str(round(dblZscoreData, 2)) + ', "zSMA": ' + str(round(signals.iloc[-1]['indSmaZscore'], 2)) + '}';
@@ -286,16 +280,9 @@ def procBar(bar1, bar2, pos, trade, displayPL=False):
                                 [bar2['Symbol'], -abs(dblQty2), strOrderComment2])
     
                     elif pos[bar1['Symbol']] > 0 and pos[bar2['Symbol']] < 0 and \
-                        pl_amt > 0 and \
-                        (pl > 0.015 or (dblZscoreData >= -1 * dblLowerThreshold and crossBelow[sym1+sym2] == 1 and z1CBBbl and pl > 0.01)):
-                        #Sell(instPair1, dblQty, strOrderComment);
-                        #Buy(instPair2, dblQty2, strOrderComment2);
-    
-                        #if (myParam.hasOpt)
-                        #{
-                        #    Buy(myParam.instPair1opt, myParam.sym1OptQty, strOrderComment);
-                        #    Buy(myParam.instPair2opt, myParam.sym2OptQty, strOrderComment);
-                        #}
+                        (pl > 0.006 or (dblZscoreData >= -1 * dblLowerThreshold and crossBelow[sym1+sym2] == 1 and z1CBBbl and pl > 0.004)):
+                        #pl_amt > 0 and \
+                        
                         sentEntryOrder[sym1+sym2] = False;
                         sentExitOrder[sym1+sym2] = True;
                         strOrderComment = '{"Entry": 0, "Exit": 1, "symPair": "' + sym1+sym2 + '", "zScore": ' + str(round(dblZscoreData, 2)) + ', "zSMA": ' + str(round(signals.iloc[-1]['indSmaZscore'], 2)) + '}';

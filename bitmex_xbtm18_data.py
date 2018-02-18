@@ -303,7 +303,7 @@ def    getLatestData(sym, inst_id):
     
 def    main():
         sym='XBTM18'
-        inst_id=getInitialData(sym, 25)
+        inst_id=getInitialData(sym, 50)
         while 1:
             try:
                 print ('Getting Latest Data History')

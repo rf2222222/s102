@@ -191,7 +191,7 @@ def proc_pair(sysname, sym1, sym2, param1, param2):
         params[sym1]=param1
         params[sym2]=param2
         confidence=adf.getCoint(SST[sym1], sym1, SST[sym2], sym2)
-        print "Coint Confidence: " + str(confidence) + "%"
+        print ("Coint Confidence: " + str(confidence) + "%")
         for i in SST.index:
             try:
                 priceHist=SST.ix[i]
@@ -227,12 +227,12 @@ def proc_pair(sysname, sym1, sym2, param1, param2):
                             
                         (mult, currency, exchange, signalfile)=params[barSym]
                         commissionkey=barSym + currency + exchange
+                        commission_pct=0.000625
+                        commission_cash=0
                         if commissionkey in commissiondata.index:
                             commission=commissiondata.loc[commissionkey]
                             commission_pct=float(commission['Pct'])
                             commission_cash=float(commission['Cash'])
-                        commission_pct=0.000675
-                        commission_cash=0
                             
                         ask=float(asks[barSym])
                         bid=float(bids[barSym])
@@ -240,6 +240,7 @@ def proc_pair(sysname, sym1, sym2, param1, param2):
                         sym=barSym
                         ibsym=barSym
                         secType='BITCOIN'
+                        ibsym=sym
                         
                         pricefeed=pd.DataFrame([[ask, bid, 1, 1, exchange, secType, commission_pct, commission_cash]], columns=['Ask','Bid','C2Mult','IBMult','Exchange','Type','Commission_Pct','Commission_Cash'])
                         if ask > 0 and bid > 0:
@@ -247,7 +248,7 @@ def proc_pair(sysname, sym1, sym2, param1, param2):
                             date=datetime.datetime.fromtimestamp(
                                 int(timestamp)
                             ).strftime("%Y%m%d %H:%M:%S EST")
-                            print 'Signal: ' + barSym + '[' + str(barSig) + ']@' + str(ask)
+                            print ('Signal: ' + barSym + '[' + str(barSig) + ']@' + str(ask))
                             adj_size(model, barSym, sysname, pricefeed,   \
                                 sysname,sysname,mult,barSym, secType, True, \
                                     mult, ibsym,currency,exchange, secType, True, date)
