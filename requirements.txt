@@ -2,12 +2,10 @@ numpy
 tzlocal
 swigibpy
 pandas
-
 matplotlib
-
 sklearn
-
 statsmodels
-
 ta-lib
-
+elasticsearch
+pyelasticsearch
+elasticsearch_dsl

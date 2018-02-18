@@ -1,3 +1,6 @@
+### Quantiacs Mean Reversion Trading System Example
+# import necessary Packages below:
+import talib as ta
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -5,8 +8,7 @@ import statsmodels.tsa.stattools as ts
 import sys
 from numpy import zeros, ones, flipud, log
 from numpy.linalg import inv, eig, cholesky as chol
-import talib as ta
-#import seitoolz.portfolio as portfolio
+import seitoolz.portfolio as portfolio
 import logging
 from statsmodels.regression.linear_model import OLS
 

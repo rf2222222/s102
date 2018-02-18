@@ -18,7 +18,7 @@ def getCoint(sym1Data, sym1, sym2Data, sym2):
     pairs[sym1]=sym1Data
     pairs[sym2]=sym2Data
     
-    pairs = calculate_spread_zscore(pairs, [sym1, sym2], 500)
+    pairs = calculate_spread_zscore(pairs, [sym1, sym2], 2000)
 
     if 'zscore' not in pairs or pairs['zscore'] is None:
 	return -1
@@ -148,13 +148,18 @@ def calculate_spread_zscore(pairs, symbols, lookback=2000):
         # linear regression between the two closing price time series
         #print "Fitting the rolling Linear Regression..."
        
-        model = pd.ols(y=pairs['%s' % symbols[0]],
-                       x=pairs['%s' % symbols[1]],
-                       window=lookback)
+        pairs['hedge_ratio'] = pd.rolling_cov(pairs['%s' % symbols[1]], 
+                                              pairs['%s' % symbols[0]], 
+                                              window=lookback) /  pd.rolling_var(pairs['%s' % symbols[1]], 
+                                                                   window=lookback)
+        
+        #model = OLS(pairs['%s' % symbols[0]],
+        #               pairs['%s' % symbols[1]]).fit()
+        #print model.summary()
     
         # Construct the hedge ratio and eliminate the first
         # lookback-length empty/NaN period
-        pairs['hedge_ratio'] = model.beta['x']
+        #pairs['hedge_ratio'] = model.beta['x']
         #pairs = pairs.dropna()
     
         # Create the spread and then a z-score of the spread
