@@ -1,0 +1,2 @@
+Version,System,Name,c2id,c2api,c2qty,c2sym,c2type,c2submit,ibqty,ibsym,ibcur,ibexch,ibtype,ibsubmit,trade_freq,ibmult,c2mult,iblocalsym
+v1.3,v1_GBPUSD,v1 stratFX105,101533256,tXFaL4E6apdfmLtGasIovtGnUDXH_CQso7uBpOCUDYGVcm1w0w,2,GBPUSD,forex,FALSE,20000,GBP,USD,IDEALPRO,CASH,FALSE,10,1,10000,
